@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 
@@ -13,8 +14,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "LearnDash — Student Learning Dashboard",
+  title: "Lumina Learn — Student Learning Dashboard",
   description:
     "A futuristic student learning dashboard to track courses, progress, and daily activity streaks.",
   keywords: ["learning", "dashboard", "courses", "student", "education"],
@@ -28,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} dark`}
+      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} dark`}
     >
       <body className="min-h-screen flex bg-background text-foreground antialiased">
         <Sidebar />

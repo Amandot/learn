@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import DynamicIcon from "./DynamicIcon";
 import { Course } from "@/types/course";
 
@@ -15,67 +16,73 @@ export default function CourseCard({ course, index }: CourseCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        delay: 0.15 + index * 0.1,
+        delay: 0.2 + index * 0.1,
         duration: 0.5,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
       whileHover={{
-        scale: 1.02,
+        y: -4,
         transition: { type: "spring", stiffness: 300, damping: 20 },
       }}
-      className="glass-card p-6 group cursor-pointer
+      className="glass-card group cursor-pointer overflow-hidden
         hover:glow-purple transition-shadow duration-300"
       aria-label={`${course.title} — ${course.progress}% complete`}
     >
-      {/* Icon + Title */}
-      <div className="flex items-start gap-4 mb-5">
-        <div className="flex items-center justify-center w-11 h-11 rounded-xl
-          bg-gradient-to-br from-accent-purple/20 to-accent-cyan/20
-          border border-white/[0.06]
-          group-hover:from-accent-purple/30 group-hover:to-accent-cyan/30
-          transition-all duration-300">
+      {/* Thumbnail */}
+      <div className="course-thumbnail relative">
+        {course.thumbnail_url ? (
+          <Image
+            src={course.thumbnail_url}
+            alt={course.title}
+            fill
+            className="object-cover transition-transform duration-400 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-accent-purple/20 to-accent-cyan/20" />
+        )}
+
+        {/* Icon Badge */}
+        <div
+          className="course-icon-badge"
+          style={{ backgroundColor: course.accent_color }}
+        >
           <DynamicIcon
             name={course.icon_name}
-            size={20}
-            className="text-accent-purple group-hover:text-accent-cyan transition-colors duration-300"
+            size={16}
+            className="text-white"
           />
-        </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="text-sm font-semibold truncate">{course.title}</h3>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            {course.progress}% Complete
-          </p>
         </div>
       </div>
 
-      {/* Progress Bar */}
-      <div className="relative">
-        <div className="w-full h-2 rounded-full bg-white/[0.06] overflow-hidden">
+      {/* Content */}
+      <div className="p-4 pt-6">
+        <h3 className="text-sm font-semibold mb-2 truncate">{course.title}</h3>
+
+        {/* Stats */}
+        <div className="flex items-center justify-between text-xs text-muted-foreground mb-3">
+          <span>{course.progress}% Complete</span>
+          <span>
+            {course.completed_lessons}/{course.total_lessons} Lessons
+          </span>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="w-full h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
           <motion.div
             initial={{ width: "0%" }}
             animate={{ width: `${course.progress}%` }}
             transition={{
-              delay: 0.5 + index * 0.1,
+              delay: 0.6 + index * 0.1,
               duration: 1.2,
               ease: [0.25, 0.46, 0.45, 0.94],
             }}
-            className="h-full rounded-full progress-gradient relative"
-          >
-            {/* Glow on progress bar tip */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full
-              bg-accent-cyan blur-sm opacity-60" />
-          </motion.div>
-        </div>
-        <div className="flex justify-between mt-2">
-          <span className="text-[10px] text-muted-foreground">Progress</span>
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 + index * 0.1 }}
-            className="text-[10px] font-medium text-accent-cyan"
-          >
-            {course.progress}%
-          </motion.span>
+            className="h-full rounded-full relative"
+            style={{
+              background: `linear-gradient(90deg, ${course.accent_color}, ${course.accent_color}dd)`,
+              boxShadow: `0 0 8px ${course.accent_color}40`,
+            }}
+          />
         </div>
       </div>
     </motion.article>

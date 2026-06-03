@@ -1,21 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Activity } from "lucide-react";
-import { useMemo } from "react";
-
-function generateMockActivity(): number[] {
-  const data: number[] = [];
-  for (let i = 0; i < 35; i++) {
-    const rand = Math.random();
-    if (rand < 0.25) data.push(0);
-    else if (rand < 0.45) data.push(1);
-    else if (rand < 0.65) data.push(2);
-    else if (rand < 0.85) data.push(3);
-    else data.push(4);
-  }
-  return data;
-}
+import { BarChart3 } from "lucide-react";
+// Deterministic activity data to avoid server/client hydration mismatch
+const ACTIVITY_DATA: number[] = [
+  3, 4, 2, 0, 4, 3, 1,
+  2, 3, 0, 4, 2, 1, 3,
+  4, 1, 3, 2, 0, 3, 4,
+  1, 2, 4, 3, 0, 2, 1,
+  3, 4, 2, 1, 3, 0, 4,
+  2, 3, 1, 4, 2, 0, 3,
+  4, 1, 2, 3, 4, 0, 2,
+];
 
 const levelClass = [
   "activity-empty",
@@ -25,49 +21,42 @@ const levelClass = [
   "activity-max",
 ];
 
-const levelLabel = ["No activity", "Low activity", "Medium activity", "High activity", "Very high activity"];
+const levelLabel = [
+  "No activity",
+  "Low activity",
+  "Medium activity",
+  "High activity",
+  "Very high activity",
+];
 
 export default function ActivityCard() {
-  const activity = useMemo(() => generateMockActivity(), []);
-
-  const totalActive = activity.filter((v) => v > 0).length;
+  const activity = ACTIVITY_DATA;
 
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-      whileHover={{
-        scale: 1.02,
-        transition: { type: "spring", stiffness: 300, damping: 20 },
+      transition={{
+        delay: 0.3,
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94],
       }}
-      className="glass-card p-6 hover:glow-cyan transition-shadow duration-300"
-      aria-label="Activity overview for the last 30 days"
+      className="glass-card p-6 hover:glow-cyan transition-shadow duration-300 flex flex-col"
+      aria-label="Learning activity heatmap"
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center gap-2.5">
-          <div className="flex items-center justify-center w-9 h-9 rounded-xl
-            bg-gradient-to-br from-accent-cyan/20 to-accent-blue/20
-            border border-white/[0.06]">
-            <Activity size={16} className="text-accent-cyan" />
-          </div>
-          <div>
-            <h3 className="text-sm font-semibold">Activity</h3>
-            <p className="text-[10px] text-muted-foreground">Last 30 days</p>
-          </div>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-base font-semibold">Learning Activity</h3>
+        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.04]">
+          <BarChart3 size={16} className="text-accent-cyan" />
         </div>
-        <span className="text-xs font-medium text-accent-cyan">
-          {totalActive} active days
-        </span>
       </div>
 
-      {/* Contribution Graph */}
+      {/* Heatmap Grid */}
       <div
-        className="grid gap-[3px]"
+        className="grid gap-[4px] flex-1"
         style={{
           gridTemplateColumns: "repeat(7, 1fr)",
-          gridTemplateRows: "repeat(5, 1fr)",
         }}
         role="img"
         aria-label="Activity contribution graph"
@@ -78,14 +67,14 @@ export default function ActivityCard() {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
-              delay: 0.8 + i * 0.02,
+              delay: 0.5 + i * 0.015,
               duration: 0.3,
               type: "spring",
               stiffness: 400,
               damping: 25,
             }}
-            whileHover={{ scale: 1.4, zIndex: 10 }}
-            className={`aspect-square rounded-[3px] cursor-pointer transition-colors
+            whileHover={{ scale: 1.3, zIndex: 10 }}
+            className={`aspect-square rounded-[4px] cursor-pointer transition-colors
               ${levelClass[level]}`}
             title={levelLabel[level]}
             aria-label={`Day ${i + 1}: ${levelLabel[level]}`}
@@ -94,15 +83,20 @@ export default function ActivityCard() {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center justify-end gap-1.5 mt-3">
-        <span className="text-[9px] text-muted-foreground mr-1">Less</span>
-        {levelClass.map((cls, i) => (
-          <div
-            key={i}
-            className={`w-[10px] h-[10px] rounded-[2px] ${cls}`}
-          />
-        ))}
-        <span className="text-[9px] text-muted-foreground ml-1">More</span>
+      <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center gap-1.5">
+          <span className="text-[10px] text-muted-foreground mr-1">Less</span>
+          {levelClass.map((cls, i) => (
+            <div
+              key={i}
+              className={`w-[12px] h-[12px] rounded-[3px] ${cls}`}
+            />
+          ))}
+          <span className="text-[10px] text-muted-foreground ml-1">More</span>
+        </div>
+        <span className="text-xs font-semibold text-accent-cyan">
+          324XP this month
+        </span>
       </div>
     </motion.section>
   );
