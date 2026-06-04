@@ -2,8 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Flame, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useProfileName } from "@/hooks/useProfileName";
 
 export default function HeroCard() {
+  const name = useProfileName();
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -57,7 +60,7 @@ export default function HeroCard() {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="text-3xl md:text-4xl lg:text-[42px] font-bold mb-3 leading-tight"
         >
-          Welcome Back, Aman{" "}
+          Welcome Back, {name}{" "}
           <motion.span
             initial={{ rotate: 0 }}
             animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
@@ -87,11 +90,13 @@ export default function HeroCard() {
           transition={{ delay: 0.55, duration: 0.5 }}
           className="flex items-center gap-3 flex-wrap"
         >
-          <button className="btn-primary">
+          <Link href="/courses" className="btn-primary">
             Continue Learning
             <ArrowRight size={16} />
-          </button>
-          <button className="btn-secondary">View Roadmap</button>
+          </Link>
+          <Link href="/analytics" className="btn-secondary">
+            View Roadmap
+          </Link>
         </motion.div>
       </div>
     </motion.section>

@@ -76,20 +76,24 @@ CREATE TABLE courses (
   title TEXT NOT NULL,
   progress INTEGER NOT NULL DEFAULT 0,
   icon_name TEXT NOT NULL,
+  total_lessons INTEGER DEFAULT 10,
+  completed_lessons INTEGER DEFAULT 0,
+  thumbnail_url TEXT DEFAULT '',
+  accent_color TEXT DEFAULT '#8b5cf6',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Enable RLS and allow public read
 ALTER TABLE courses ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read" ON courses FOR SELECT USING (true);
 
--- Seed data
-INSERT INTO courses (title, progress, icon_name) VALUES
-  ('Advanced React Patterns', 75, 'BookOpen'),
-  ('Next.js Mastery', 60, 'Rocket'),
-  ('TypeScript Fundamentals', 90, 'Code'),
-  ('UI Animation Design', 45, 'Sparkles');
+INSERT INTO courses (title, progress, icon_name, total_lessons, completed_lessons, accent_color) VALUES
+  ('Advanced React Patterns', 75, 'BookOpen', 16, 12, '#8b5cf6'),
+  ('Next.js Mastery', 60, 'Rocket', 14, 8, '#3b82f6'),
+  ('TypeScript Fundamentals', 90, 'Code', 20, 18, '#06b6d4'),
+  ('UI Animation Design', 45, 'Sparkles', 11, 5, '#ef4444');
 ```
+
+> **No login required.** The app runs with built-in demo data if env vars are omitted.
 
 ### 4. Run Development Server
 

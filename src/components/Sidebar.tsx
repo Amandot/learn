@@ -12,7 +12,6 @@ import {
   Menu,
   X,
   CircleHelp,
-  LogOut,
   Brain,
 } from "lucide-react";
 
@@ -95,7 +94,8 @@ export default function Sidebar() {
           {navItems.map((item) => {
             const isActive =
               pathname === item.href ||
-              pathname.startsWith(item.href + "/");
+              pathname.startsWith(item.href + "/") ||
+              (item.href === "/dashboard" && pathname === "/");
             const Icon = item.icon;
 
             return (
@@ -132,27 +132,19 @@ export default function Sidebar() {
             <p className="text-xs font-semibold text-foreground mb-1">
               Premium Tier
             </p>
-            <button className="premium-btn mt-2">Upgrade to Pro</button>
+            <Link href="/courses" className="premium-btn mt-2 block">
+              Explore Courses
+            </Link>
           </div>
 
           {/* Help */}
           <Link
-            href="#"
+            href="/settings"
             className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground
               hover:text-foreground transition-colors rounded-xl hover:bg-white/5"
           >
             <CircleHelp size={18} />
-            <span>Help</span>
-          </Link>
-
-          {/* Logout */}
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground
-              hover:text-foreground transition-colors rounded-xl hover:bg-white/5"
-          >
-            <LogOut size={18} />
-            <span>Logout</span>
+            <span>Help & Settings</span>
           </Link>
         </div>
       </aside>

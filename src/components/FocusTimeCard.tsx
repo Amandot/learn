@@ -46,26 +46,27 @@ export default function FocusTimeCard() {
       </div>
 
       {/* Bar Chart */}
-      <div className="flex-1 flex items-end gap-3 min-h-[140px]">
+      <div className="flex-1 flex items-end gap-3 h-[140px]">
         {focusData.map((val, i) => {
-          const heightPercent = (val / maxVal) * 100;
-          const isToday = i === 3; // Thursday
+          const barHeight = Math.max(12, (val / maxVal) * 120);
+          const isToday = i === 3;
 
           return (
-            <motion.div
-              key={i}
-              initial={{ height: 0 }}
-              animate={{ height: `${heightPercent}%` }}
-              transition={{
-                delay: 0.7 + i * 0.08,
-                duration: 0.8,
-                ease: [0.34, 1.56, 0.64, 1],
-              }}
-              className="flex-1 focus-bar"
-              style={{
-                opacity: isToday ? 1 : 0.6,
-              }}
-            />
+            <div key={i} className="flex-1 flex items-end h-full">
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{ height: barHeight }}
+                transition={{
+                  delay: 0.7 + i * 0.08,
+                  duration: 0.8,
+                  ease: [0.34, 1.56, 0.64, 1],
+                }}
+                className="w-full focus-bar"
+                style={{
+                  opacity: isToday ? 1 : 0.6,
+                }}
+              />
+            </div>
           );
         })}
       </div>

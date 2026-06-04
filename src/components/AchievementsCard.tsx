@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Zap, Target, Monitor, Lock } from "lucide-react";
+import Link from "next/link";
 
 const achievements = [
   { icon: Zap, label: "Speed Learner", unlocked: true },
@@ -62,10 +63,13 @@ export default function AchievementsCard() {
       </div>
 
       {/* Footer Link */}
-      <button className="mt-5 text-xs text-muted-foreground hover:text-foreground
-        transition-colors text-center cursor-pointer">
-        Show All Rewards
-      </button>
+      <Link
+        href="/analytics"
+        className="mt-5 text-xs text-muted-foreground hover:text-foreground
+          transition-colors text-center block"
+      >
+        Show All Rewards →
+      </Link>
     </motion.section>
   );
 }
