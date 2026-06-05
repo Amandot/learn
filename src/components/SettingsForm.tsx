@@ -8,7 +8,7 @@ import { useProfileName, setProfileName } from "@/hooks/useProfileName";
 export default function SettingsForm() {
   const profileName = useProfileName();
   const [name, setName] = useState(profileName);
-  const [email] = useState("student@luminalearn.app");
+  const [email] = useState("student@edgelearn.app");
   const [notifications, setNotifications] = useState(true);
   const [weeklyDigest, setWeeklyDigest] = useState(true);
   const [saved, setSaved] = useState(false);

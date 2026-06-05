@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -12,7 +13,6 @@ import {
   Menu,
   X,
   CircleHelp,
-  Brain,
 } from "lucide-react";
 
 const navItems = [
@@ -69,13 +69,10 @@ export default function Sidebar() {
         {/* Header / Logo */}
         <div className="flex items-center justify-between h-16 px-5">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-purple to-accent-cyan flex items-center justify-center">
-              <Brain size={18} className="text-white" />
+            <div className="w-10 h-10 relative overflow-hidden rounded-xl">
+              <Image src="/edge.png" alt="EdgeLearn logo" fill className="object-cover" />
             </div>
-            <span className="text-base font-bold tracking-tight">
-              <span className="gradient-text">Lumina</span>{" "}
-              <span className="text-foreground">Learn</span>
-            </span>
+            <span className="text-base font-bold tracking-tight">EdgeLearn</span>
           </div>
 
           {/* Mobile close button */}

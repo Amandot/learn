@@ -20,7 +20,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Lumina Learn — Student Learning Dashboard",
+  title: "EdgeLearn — Student Learning Dashboard",
   description:
     "A futuristic student learning dashboard to track courses, progress, and daily activity streaks.",
   keywords: ["learning", "dashboard", "courses", "student", "education"],

@@ -2,14 +2,14 @@
 
 import { useSyncExternalStore } from "react";
 
-export const PROFILE_NAME_KEY = "lumina-profile-name";
+export const PROFILE_NAME_KEY = "edgelearn-profile-name";
 
 function subscribe(callback: () => void) {
   window.addEventListener("storage", callback);
-  window.addEventListener("lumina-profile-update", callback);
+  window.addEventListener("edgelearn-profile-update", callback);
   return () => {
     window.removeEventListener("storage", callback);
-    window.removeEventListener("lumina-profile-update", callback);
+    window.removeEventListener("edgelearn-profile-update", callback);
   };
 }
 
@@ -27,5 +27,5 @@ export function useProfileName() {
 
 export function setProfileName(name: string) {
   localStorage.setItem(PROFILE_NAME_KEY, name.trim() || "Aman");
-  window.dispatchEvent(new Event("lumina-profile-update"));
+  window.dispatchEvent(new Event("edgelearn-profile-update"));
 }
