@@ -7,6 +7,8 @@ A futuristic, dark-themed Student Learning Dashboard built with Next.js 15, desi
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss)
 ![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=flat-square&logo=supabase)
 
+🌐 **Live Demo:** https://learn-roan-omega.vercel.app/
+
 ---
 
 ## ✨ Features
